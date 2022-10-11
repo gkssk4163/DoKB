@@ -2,7 +2,7 @@ from os import listdir
 from os.path import isfile, join 
 import cv2
 import numpy as np
-##### 여기서부터는 Part2.py와 동일  
+#### 여기서부터는 Part2.py와 동일  
 data_path =  'face/' 
 onlyfiles = [f for f in listdir(data_path) if isfile(join(data_path,f))] 
 Training_Data, Labels = [], [] 
@@ -57,7 +57,7 @@ while True:
             display_string = str(confidence)+'% Confidence it is user' 
         cv2.putText(image,display_string,(100,120), cv2.FONT_HERSHEY_COMPLEX,1,(250,120,255),2) 
         #75 보다 크면 동일 인물로 간주해 UnLocked!  
-        if confidence > 75: 
+        if confidence > 85: 
             cv2.putText(image, "Unlocked", (250, 450), cv2.FONT_HERSHEY_COMPLEX, 1, (0, 255, 0), 2) 
             cv2.imshow('Face Cropper', image) 
         else: 
