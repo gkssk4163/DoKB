@@ -1,5 +1,8 @@
-package com.dokb.DoKB.user;
+package com.dokb.DoKB.user.service;
 
+import com.dokb.DoKB.user.domain.User;
+import com.dokb.DoKB.user.domain.UserApi;
+import com.dokb.DoKB.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

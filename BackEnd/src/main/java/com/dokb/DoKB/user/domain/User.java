@@ -1,4 +1,4 @@
-package com.dokb.DoKB.user;
+package com.dokb.DoKB.user.domain;
 
 
 import lombok.*;

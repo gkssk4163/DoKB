@@ -1,5 +1,7 @@
-package com.dokb.DoKB.user;
+package com.dokb.DoKB.user.controller;
 
+import com.dokb.DoKB.user.domain.UserApi;
+import com.dokb.DoKB.user.service.UserApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 

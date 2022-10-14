@@ -1,5 +1,6 @@
-package com.dokb.DoKB.user;
+package com.dokb.DoKB.user.repository;
 
+import com.dokb.DoKB.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
