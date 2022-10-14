@@ -1,11 +1,13 @@
 package com.dokb.DoKB.user.domain;
 
 
+import com.dokb.DoKB.account.domain.Account;
 import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Data
@@ -32,4 +34,7 @@ public class User{
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+    private List<Account> accountList;
 }

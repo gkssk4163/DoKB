@@ -20,12 +20,12 @@ public class HistoryApiController {
     }
 
     @GetMapping("{id}")
-    public Optional<HistoryApi> read(@PathVariable(name="id") Long id){
+    public HistoryApi read(@PathVariable(name="id") Long id){
         return historyApiService.read(id);
     }
 
     @PutMapping("")
-    public Optional<HistoryApi> update(@RequestBody HistoryApi request){
+    public HistoryApi update(@RequestBody HistoryApi request){
         return historyApiService.update(request);
     }
 

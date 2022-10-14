@@ -1,15 +1,13 @@
 package com.dokb.DoKB.history.domain;
 
+import com.dokb.DoKB.account.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.Accessors;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -35,5 +33,9 @@ public class History {
 
     private BigDecimal balance;
 
-    private String accountNumber;
+
+    //Histort n:1 account
+    @ManyToOne
+    @JoinColumn(name="accountNumber")
+    private Account account;
 }

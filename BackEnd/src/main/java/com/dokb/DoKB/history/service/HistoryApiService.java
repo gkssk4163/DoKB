@@ -1,5 +1,8 @@
 package com.dokb.DoKB.history.service;
 
+import com.dokb.DoKB.account.domain.Account;
+import com.dokb.DoKB.account.repository.AccountRepository;
+import com.dokb.DoKB.common.ApiResponseStatus;
 import com.dokb.DoKB.history.repository.HistoryRepository;
 import com.dokb.DoKB.history.domain.History;
 import com.dokb.DoKB.history.domain.HistoryApi;
@@ -14,49 +17,44 @@ import java.util.Optional;
 public class HistoryApiService {
     @Autowired
     private HistoryRepository historyRepository;
-
+    @Autowired
+    AccountRepository accountRepository;
     public HistoryApi create(HistoryApi request){
+        Account account = accountRepository.findByAccountNumber(request.getAccountNumber()).orElseThrow(NullPointerException::new);
         History history = History.builder()
                 .opponentAccount(request.getOpponentAccount())
                 .dealDate(LocalDateTime.now())
                 .inOut(request.getInOut())
                 .amount(request.getAmount())
                 .balance(request.getBalance())
-                .accountNumber(request.getAccountNumber())
+                .account(account)
                 .build();
 
         History newHistory = historyRepository.save(history);
         return response(newHistory);
     }
 
-    public Optional<HistoryApi> read(Long id){
-        Optional<History> optional = historyRepository.findById(id);
-        return optional.map(history -> response(history));
+    public HistoryApi read(Long id){
+        History history = historyRepository.findById(id).orElseThrow(NullPointerException::new);
+        return response(history);
     }
 
-    public Optional<HistoryApi> update(HistoryApi request){
-        Optional<History> optional = historyRepository.findById(request.getId());
-
-        return optional.map(history -> {
-            history.setOpponentAccount(request.getOpponentAccount())
-                    .setDealDate(request.getDealDate())
-                    .setInOut(request.getInOut())
-                    .setAmount(request.getAmount())
-                    .setBalance(request.getBalance())
-                    .setOpponentAccount(request.getOpponentAccount());
-            return history;
-        })
-                .map(history -> historyRepository.save(history))
-                .map(updateHistory->response(updateHistory));
+    public HistoryApi update(HistoryApi request){
+        History history = historyRepository.findById(request.getId()).orElseThrow(NullPointerException::new);
+        history.setOpponentAccount(request.getOpponentAccount())
+                .setDealDate(request.getDealDate())
+                .setInOut(request.getInOut())
+                .setAmount(request.getAmount())
+                .setBalance(request.getBalance())
+                .setOpponentAccount(request.getOpponentAccount());
+        History updateHistory = historyRepository.save(history);
+        return response(updateHistory);
     }
 
     public String delete(Long id){
-        Optional<History> optional = historyRepository.findById(id);
-
-        return optional.map(history -> {
-            historyRepository.delete(history);
-            return "Delete";
-        }).orElseGet(()->"nodata");
+        History history = historyRepository.findById(id).orElseThrow(NullPointerException::new);
+        historyRepository.delete(history);
+        return ApiResponseStatus.DELETE.getLabel();
     }
     private HistoryApi response(History history){
         HistoryApi historyApi = HistoryApi.builder()
@@ -66,7 +64,7 @@ public class HistoryApiService {
                 .inOut(history.getInOut())
                 .amount(history.getAmount())
                 .balance(history.getBalance())
-                .accountNumber(history.getAccountNumber())
+                .accountNumber(history.getAccount().getAccountNumber())
                 .build();
 
         return historyApi;

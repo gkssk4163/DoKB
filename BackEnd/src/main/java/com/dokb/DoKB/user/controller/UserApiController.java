@@ -21,12 +21,12 @@ public class UserApiController {
     }
 
     @GetMapping("{register_number}")
-    public Optional<UserApi> read(@PathVariable(name="register_number") String register_number){
+    public UserApi read(@PathVariable(name="register_number") String register_number){
         return userApiService.read(register_number);
     }
 
     @PutMapping("")
-    public Optional<UserApi> update(@RequestBody UserApi request){
+    public UserApi update(@RequestBody UserApi request){
         return userApiService.update(request);
     }
 

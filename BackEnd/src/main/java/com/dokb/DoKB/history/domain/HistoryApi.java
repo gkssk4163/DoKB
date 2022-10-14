@@ -1,10 +1,13 @@
 package com.dokb.DoKB.history.domain;
 
+import com.dokb.DoKB.account.domain.Account;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
@@ -27,4 +30,5 @@ public class HistoryApi {
     private BigDecimal balance;
 
     private String accountNumber;
+
 }

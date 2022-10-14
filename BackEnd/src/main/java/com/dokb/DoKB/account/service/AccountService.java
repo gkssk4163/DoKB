@@ -4,6 +4,8 @@ import com.dokb.DoKB.account.domain.Account;
 import com.dokb.DoKB.account.domain.AccountDto;
 import com.dokb.DoKB.account.repository.AccountRepository;
 import com.dokb.DoKB.common.ApiResponseStatus;
+import com.dokb.DoKB.user.domain.User;
+import com.dokb.DoKB.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -11,14 +13,17 @@ import org.springframework.stereotype.Service;
 public class AccountService {
 	@Autowired
 	AccountRepository accountRepository;
-
+	@Autowired
+	UserRepository userRepository;
 	public AccountDto create(AccountDto accountDto) {
+		User user = userRepository.findFirstByRegisterNumber(accountDto.getUserRegisterNumber()).orElseThrow(NullPointerException::new);
+
 		Account account = Account.builder()
 				.accountNumber(accountDto.getAccountNumber())
 				.password(accountDto.getPassword())
 				.purpose(accountDto.getPurpose())
 				.sof(accountDto.getSof())
-				.userRegisterNumber(accountDto.getUserRegisterNumber())
+				.user(user)
 				.build();
 		Account newAccount = accountRepository.save(account);
 		return response(newAccount);
@@ -31,6 +36,8 @@ public class AccountService {
 	}
 
 	public AccountDto update(AccountDto accountDto) {
+		User user = userRepository.findFirstByRegisterNumber(accountDto.getUserRegisterNumber()).orElseThrow(NullPointerException::new);
+
 		Account account = accountRepository.findByAccountNumber(accountDto.getAccountNumber())
 				.orElseThrow(NullPointerException::new);
 
@@ -39,7 +46,7 @@ public class AccountService {
 				.setPurpose(accountDto.getPurpose())
 				.setSof(accountDto.getSof())
 				.setBalance(accountDto.getBalance())
-				.setUserRegisterNumber(accountDto.getUserRegisterNumber());
+				.setUser(user);
 		Account updateAccount = accountRepository.save(account);
 
 		return response(updateAccount);
@@ -55,13 +62,14 @@ public class AccountService {
 	}
 
 	private AccountDto response(Account account) {
+
 		AccountDto accountDto = AccountDto.builder()
 				.accountNumber(account.getAccountNumber())
 				.balance(account.getBalance())
 				.password(account.getPassword())
 				.purpose(account.getPurpose())
 				.sof(account.getSof())
-				.userRegisterNumber(account.getUserRegisterNumber())
+				.userRegisterNumber(account.getUser().getRegisterNumber())
 				.build();
 		return accountDto;
 	}
