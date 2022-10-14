@@ -1,6 +1,7 @@
 package com.dokb.DoKB.account.controller;
 
 import com.dokb.DoKB.account.domain.AccountDto;
+import com.dokb.DoKB.account.domain.AccountTransferDto;
 import com.dokb.DoKB.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -30,4 +31,10 @@ public class AccountController {
 	public String delete(@PathVariable(name = "account_number") String accountNumber) {
 		return accountService.delete(accountNumber);
 	}
+
+	@PostMapping("/transfer")
+	public String transfer(@RequestBody AccountTransferDto accountTransferDto) {
+		return accountService.transfer(accountTransferDto);
+	}
+
 }

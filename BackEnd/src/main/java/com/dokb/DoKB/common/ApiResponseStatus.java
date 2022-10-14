@@ -1,7 +1,7 @@
 package com.dokb.DoKB.common;
 
 public enum ApiResponseStatus {
-	DELETE("DELETE");
+	DELETE("DELETE"), SUCCESS("SUCCESS");
 
 	private final String label;
 
