@@ -2,12 +2,15 @@ package com.dokb.DoKB.account.service;
 
 import com.dokb.DoKB.account.domain.Account;
 import com.dokb.DoKB.account.domain.AccountDto;
+import com.dokb.DoKB.account.domain.AccountTransferDto;
 import com.dokb.DoKB.account.repository.AccountRepository;
 import com.dokb.DoKB.common.ApiResponseStatus;
 import com.dokb.DoKB.user.domain.User;
 import com.dokb.DoKB.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import javax.transaction.Transactional;
 
 @Service
 public class AccountService {
@@ -26,13 +29,13 @@ public class AccountService {
 				.user(user)
 				.build();
 		Account newAccount = accountRepository.save(account);
-		return response(newAccount);
+		return newAccount.parseAccountDto();
 	}
 
 	public AccountDto read(String accountNumber) {
 		Account account = accountRepository.findByAccountNumber(accountNumber)
 				.orElseThrow(NullPointerException::new);
-		return response(account);
+		return account.parseAccountDto();
 	}
 
 	public AccountDto update(AccountDto accountDto) {
@@ -49,7 +52,7 @@ public class AccountService {
 				.setUser(user);
 		Account updateAccount = accountRepository.save(account);
 
-		return response(updateAccount);
+		return updateAccount.parseAccountDto();
 	}
 
 	public String delete(String accountNumber) {
@@ -61,16 +64,22 @@ public class AccountService {
 		return ApiResponseStatus.DELETE.getLabel();
 	}
 
-	private AccountDto response(Account account) {
+	@Transactional
+	public String transfer(AccountTransferDto accountTransferDto) {
+		Account sender = accountRepository.findByAccountNumber(accountTransferDto.getAccountNumber())
+				.orElseThrow(NullPointerException::new);
+		Account receiver = accountRepository.findByAccountNumber(accountTransferDto.getOpponentAccount())
+				.orElseThrow(NullPointerException::new);
+		long amount = accountTransferDto.getAmount();
 
-		AccountDto accountDto = AccountDto.builder()
-				.accountNumber(account.getAccountNumber())
-				.balance(account.getBalance())
-				.password(account.getPassword())
-				.purpose(account.getPurpose())
-				.sof(account.getSof())
-				.userRegisterNumber(account.getUser().getRegisterNumber())
-				.build();
-		return accountDto;
+		if (sender.getBalance() < amount) {
+			throw new IllegalArgumentException("이체가능한 금액을 초과하였습니다.");
+		}
+		sender.setBalance(sender.getBalance() - amount);
+		update(sender.parseAccountDto());
+		receiver.setBalance(sender.getBalance() + amount);
+		update(receiver.parseAccountDto());
+
+		return ApiResponseStatus.SUCCESS.getLabel();
 	}
 }
