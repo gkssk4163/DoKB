@@ -1,5 +1,9 @@
-package com.dokb.DoKB.user;
+package com.dokb.DoKB.user.service;
 
+import com.dokb.DoKB.common.ApiResponseStatus;
+import com.dokb.DoKB.user.domain.User;
+import com.dokb.DoKB.user.domain.UserApi;
+import com.dokb.DoKB.user.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,36 +30,29 @@ public class UserApiService {
         return response(newUser);
     }
 
-    public Optional<UserApi> read(String register_number){
-        Optional<User> optional = Optional.ofNullable(userRepository.findFirstByRegisterNumber(register_number));
-        return optional.map(user->response(user));
+    public UserApi read(String register_number){
+        User user = userRepository.findFirstByRegisterNumber(register_number).orElseThrow(NullPointerException::new);
+        return response(user);
     }
 
-    public Optional<UserApi> update(UserApi request){
+    public UserApi update(UserApi request){
 
-
-        Optional<User> optional = Optional.ofNullable(userRepository.findFirstByRegisterNumber(request.getRegisterNumber()));
-
-        return optional.map(user->{
-                    user.setName(request.getName())
-                            .setPhoneNumber(request.getPhoneNumber())
-                            .setEmail(request.getEmail())
-                            .setAddress(request.getAddress())
-                            .setJob(request.getJob())
-                            .setUpdatedAt(LocalDateTime.now());
-                    return user;
-                })
-                .map(user->userRepository.save(user))
-                .map(updateUser->response(updateUser));
+        User user = userRepository.findFirstByRegisterNumber(request.getRegisterNumber()).orElseThrow(NullPointerException::new);
+        user.setName(request.getName())
+                .setPhoneNumber(request.getPhoneNumber())
+                .setEmail(request.getEmail())
+                .setAddress(request.getAddress())
+                .setJob(request.getJob())
+                .setUpdatedAt(LocalDateTime.now());
+        User updateUser = userRepository.save(user);
+        return response(updateUser);
     }
 
     public String delete(String register_number){
-        Optional<User> optional = Optional.ofNullable(userRepository.findFirstByRegisterNumber(register_number));
-
-        return optional.map(user -> {
-            userRepository.delete(user);
-            return "Delete";
-        }).orElseGet(()->"nodata");
+        User user = userRepository.findFirstByRegisterNumber(register_number)
+                .orElseThrow(NullPointerException::new);
+        userRepository.delete(user);
+        return ApiResponseStatus.DELETE.getLabel();
     }
 
     private UserApi response(User user){

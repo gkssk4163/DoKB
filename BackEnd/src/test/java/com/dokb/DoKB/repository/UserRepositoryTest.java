@@ -1,13 +1,6 @@
 package com.dokb.DoKB.repository;
 
 import com.dokb.DoKB.DoKbApplicationTests;
-import com.dokb.DoKB.user.User;
-import com.dokb.DoKB.user.UserRepository;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.time.LocalDateTime;
 
 public class UserRepositoryTest extends DoKbApplicationTests {
 //    @Autowired

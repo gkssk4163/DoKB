@@ -1,5 +1,7 @@
-package com.dokb.DoKB.user;
+package com.dokb.DoKB.user.controller;
 
+import com.dokb.DoKB.user.domain.UserApi;
+import com.dokb.DoKB.user.service.UserApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,12 +21,12 @@ public class UserApiController {
     }
 
     @GetMapping("{register_number}")
-    public Optional<UserApi> read(@PathVariable(name="register_number") String register_number){
+    public UserApi read(@PathVariable(name="register_number") String register_number){
         return userApiService.read(register_number);
     }
 
     @PutMapping("")
-    public Optional<UserApi> update(@RequestBody UserApi request){
+    public UserApi update(@RequestBody UserApi request){
         return userApiService.update(request);
     }
 
