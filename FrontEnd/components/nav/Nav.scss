@@ -1,0 +1,47 @@
+.header {
+    margin-top: 10px;
+    display: grid;
+}
+
+.mainLogo {
+    margin-left: 300px;
+    grid-column: 2;
+    width: 249px;
+    height: 70px;
+}
+
+.headerLogin {
+    margin-right: 150px;
+    grid-column:5;
+    align-self : center;
+    font-size: 23px;
+    color: black;
+    font-family: "KB_medium_font";
+}
+
+.nav {
+    display: flex;
+    margin-top: 20px;
+    height: 70px;
+    justify-content: center;
+    align-items: center;
+    background-color: #FFCE0A;
+
+}
+
+.navTab {
+    width: 200px;
+    height: 70px;
+    font-size: 19px;
+    text-align: center;
+    line-height: 70px;
+    font-family: "KB_medium_font";
+}
+
+.navTab:hover {
+    background-color:#F8BA1F;
+}
+
+.active{
+    background-color: #F8BA1F;
+}
