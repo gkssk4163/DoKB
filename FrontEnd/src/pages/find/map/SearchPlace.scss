@@ -1,0 +1,64 @@
+.findContainer {
+    display: flex;
+    justify-content: center;
+    font-family: "KB_medium_font";
+}
+
+.mapContainer {
+    margin: 20px;
+    width: 1000px;
+}
+
+.mapInputForm {
+    display: flex;
+    gap: 20px;
+}
+
+.mapInputContainer input {
+    margin-left: 50px;
+    width: 200px;
+    font-size: 20px;   
+}
+
+.mapInputContainer button {
+    justify-content: center;
+}
+
+.listMapContainer {
+    display: flex;
+    justify-content: space-between;
+}
+
+.listContainer {
+    display: flex;
+    flex-direction: column;
+    height: 500px;
+    overflow-y: auto;
+}
+
+.listContainer h5 {
+    font-size: 23px;
+    margin-bottom: 10px;
+}
+
+.addressName {
+    margin-bottom: 8px;
+}
+
+.pageNation {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    font-size: 20px;
+    margin: 20px 0;
+}
+
+.pageNation a {
+    background-color: #F8BA1F;
+    line-height: 150%;
+    text-align: center;
+    width: 20px;
+    height: 30px;
+    text-decoration: none;
+    color: black;
+}
