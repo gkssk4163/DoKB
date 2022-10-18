@@ -13,7 +13,7 @@ public class AccountController {
 	AccountService accountService;
 
 	@PostMapping
-	public AccountDto create(@RequestBody AccountDto accountDto) {
+	public AccountDto create(AccountDto accountDto) {
 		return accountService.create(accountDto);
 	}
 
@@ -23,7 +23,7 @@ public class AccountController {
 	}
 
 	@PutMapping
-	public AccountDto update(@RequestBody AccountDto accountDto) {
+	public AccountDto update(AccountDto accountDto) {
 		return accountService.update(accountDto);
 	}
 
@@ -33,7 +33,7 @@ public class AccountController {
 	}
 
 	@PostMapping("/transfer")
-	public String transfer(@RequestBody AccountTransferDto accountTransferDto) {
+	public String transfer(AccountTransferDto accountTransferDto) {
 		return accountService.transfer(accountTransferDto);
 	}
 
