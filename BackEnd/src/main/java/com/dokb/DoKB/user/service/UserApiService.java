@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.Optional;
+
 @Service
 public class UserApiService {
 
     @Autowired
     private UserRepository userRepository;
 
-    public UserApi create(UserApi request){
+    public UserApi create(UserApi request) {
         User user = User.builder()
                 .registerNumber(request.getRegisterNumber())
                 .name(request.getName())
@@ -26,16 +26,16 @@ public class UserApiService {
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())
                 .build();
-        User newUser =userRepository.save(user);
+        User newUser = userRepository.save(user);
         return response(newUser);
     }
 
-    public UserApi read(String register_number){
+    public UserApi read(String register_number) {
         User user = userRepository.findFirstByRegisterNumber(register_number).orElseThrow(NullPointerException::new);
         return response(user);
     }
 
-    public UserApi update(UserApi request){
+    public UserApi update(UserApi request) {
 
         User user = userRepository.findFirstByRegisterNumber(request.getRegisterNumber()).orElseThrow(NullPointerException::new);
         user.setName(request.getName())
@@ -48,15 +48,15 @@ public class UserApiService {
         return response(updateUser);
     }
 
-    public String delete(String register_number){
+    public String delete(String register_number) {
         User user = userRepository.findFirstByRegisterNumber(register_number)
                 .orElseThrow(NullPointerException::new);
         userRepository.delete(user);
         return ApiResponseStatus.DELETE.getLabel();
     }
 
-    private UserApi response(User user){
-        UserApi userApi = UserApi.builder()
+    private UserApi response(User user) {
+        return UserApi.builder()
                 .registerNumber(user.getRegisterNumber())
                 .name(user.getName())
                 .phoneNumber(user.getPhoneNumber())
@@ -66,6 +66,5 @@ public class UserApiService {
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();
-        return userApi;
     }
 }
