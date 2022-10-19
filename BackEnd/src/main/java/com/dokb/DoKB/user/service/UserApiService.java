@@ -3,7 +3,7 @@ package com.dokb.DoKB.user.service;
 import com.dokb.DoKB.common.ApiResponseStatus;
 import com.dokb.DoKB.user.domain.User;
 import com.dokb.DoKB.user.domain.UserApi;
-import com.dokb.DoKB.user.repository.UserRepository;
+import com.dokb.DoKB.user.service.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
