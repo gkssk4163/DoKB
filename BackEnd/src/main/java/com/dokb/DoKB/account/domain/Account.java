@@ -2,10 +2,7 @@ package com.dokb.DoKB.account.domain;
 
 import com.dokb.DoKB.history.domain.History;
 import com.dokb.DoKB.user.domain.User;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -18,6 +15,7 @@ import java.util.List;
 @AllArgsConstructor
 @Accessors(chain = true)
 @Entity(name = "account")
+@ToString(exclude = {"user"})
 public class Account {
     @Id
     private String accountNumber;
