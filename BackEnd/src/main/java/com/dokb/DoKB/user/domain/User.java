@@ -5,7 +5,10 @@ import com.dokb.DoKB.account.domain.Account;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -16,10 +19,10 @@ import java.util.List;
 @Builder
 @ToString()
 @Accessors(chain = true)
-public class User{
+@ToString(exclude = {"account", "history"})
+public class User {
 
     @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
     private String registerNumber;
 
     private String name;

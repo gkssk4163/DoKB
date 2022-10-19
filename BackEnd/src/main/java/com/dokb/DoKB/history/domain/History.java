@@ -1,10 +1,7 @@
 package com.dokb.DoKB.history.domain;
 
 import com.dokb.DoKB.account.domain.Account;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import lombok.experimental.Accessors;
 
 import javax.persistence.*;
@@ -17,6 +14,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
+@ToString(exclude = {"account"})
 public class History {
 
     @Id
@@ -36,6 +34,6 @@ public class History {
 
     //Histort n:1 account
     @ManyToOne
-    @JoinColumn(name="accountNumber")
+    @JoinColumn(name = "accountNumber")
     private Account account;
 }
