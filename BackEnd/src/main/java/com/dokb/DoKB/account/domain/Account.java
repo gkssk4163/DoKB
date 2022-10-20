@@ -41,6 +41,7 @@ public class Account {
     private User user;
 
     @JsonManagedReference
+    @OrderBy("dealDate desc")
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<History> historyList;
 
