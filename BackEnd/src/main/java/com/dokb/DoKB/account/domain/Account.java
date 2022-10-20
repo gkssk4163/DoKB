@@ -2,6 +2,8 @@ package com.dokb.DoKB.account.domain;
 
 import com.dokb.DoKB.history.domain.History;
 import com.dokb.DoKB.user.domain.User;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.Accessors;
 import org.hibernate.annotations.ColumnDefault;
@@ -33,10 +35,12 @@ public class Account {
     private long balance;
 
     // Account n:1 user
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "userRegisterNumber")
     private User user;
 
+    @JsonManagedReference
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
     private List<History> historyList;
 

@@ -2,6 +2,7 @@ package com.dokb.DoKB.user.domain;
 
 
 import com.dokb.DoKB.account.domain.Account;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -17,28 +18,28 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString()
 @Accessors(chain = true)
 @ToString(exclude = {"account", "history"})
 public class User {
 
-    @Id
-    private String registerNumber;
+	@Id
+	private String registerNumber;
 
-    private String name;
+	private String name;
 
-    private String phoneNumber;
+	private String phoneNumber;
 
-    private String email;
+	private String email;
 
-    private String address;
+	private String address;
 
-    private String job;
+	private String job;
 
-    private LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Account> accountList;
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	private List<Account> accountList;
 }
