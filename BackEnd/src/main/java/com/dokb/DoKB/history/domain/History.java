@@ -36,4 +36,16 @@ public class History {
     @ManyToOne
     @JoinColumn(name = "accountNumber")
     private Account account;
+
+    public HistoryApi parseHistoryApi(){
+        return HistoryApi.builder()
+                .id(this.getId())
+                .opponentAccount(this.getOpponentAccount())
+                .dealDate(this.getDealDate())
+                .inOut(this.getInOut())
+                .amount(this.getAmount())
+                .balance(this.getBalance())
+                .accountNumber(this.getOpponentAccount())
+                .build();
+    }
 }

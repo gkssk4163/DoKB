@@ -17,7 +17,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@ToString()
 @Accessors(chain = true)
 @ToString(exclude = {"account", "history"})
 public class User {
@@ -41,4 +40,19 @@ public class User {
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
     private List<Account> accountList;
+
+
+    public UserApi parseUserApi(){
+        return UserApi.builder()
+                .registerNumber(this.getRegisterNumber())
+                .name(this.getName())
+                .phoneNumber(this.getPhoneNumber())
+                .email(this.getEmail())
+                .address(this.getAddress())
+                .address(this.getAddress())
+                .job(this.getJob())
+                .createdAt(this.getCreatedAt())
+                .updatedAt(this.getUpdatedAt())
+                .build();
+    }
 }
