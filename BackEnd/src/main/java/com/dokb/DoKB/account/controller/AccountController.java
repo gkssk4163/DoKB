@@ -1,10 +1,13 @@
 package com.dokb.DoKB.account.controller;
 
+import com.dokb.DoKB.account.domain.Account;
 import com.dokb.DoKB.account.domain.AccountDto;
 import com.dokb.DoKB.account.domain.AccountTransferDto;
 import com.dokb.DoKB.account.service.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
@@ -35,6 +38,15 @@ public class AccountController {
 	@PostMapping("/transfer")
 	public String transfer(AccountTransferDto accountTransferDto) {
 		return accountService.transfer(accountTransferDto);
+	}
+
+	/**
+	 * 로그인 구현 후 registerNumber 받지 않고
+	 * Session User 정보로 조회해오도록 **수정필요**
+	 */
+	@GetMapping("/all")
+	public List<Account> findAllByUser(String registerNumber) {
+		return accountService.findAllByUser(registerNumber);
 	}
 
 }
