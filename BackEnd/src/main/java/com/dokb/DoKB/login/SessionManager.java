@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.transaction.Transactional;
 import java.util.Arrays;
 import java.util.Map;
 import java.util.UUID;
@@ -32,7 +33,7 @@ public class SessionManager {
     }
 
     public Object getSession(HttpServletRequest request){
-        Cookie sessionCookie = findCookie(request, SESSION_COOKIE_NAME);
+        Cookie sessionCookie = findCookie(request, SESSION_COOKIE_SESSION);
         return sessionStore.get(sessionCookie.getValue());
     }
 

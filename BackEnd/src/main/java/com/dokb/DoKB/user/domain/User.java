@@ -40,7 +40,7 @@ public class User {
 	private LocalDateTime updatedAt;
 
 	@JsonManagedReference
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
 	private List<Account> accountList;
 
     public UserApi parseUserApi(){

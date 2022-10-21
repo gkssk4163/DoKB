@@ -42,7 +42,7 @@ public class Account {
 
     @JsonManagedReference
     @OrderBy("dealDate desc")
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "account")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "account")
     private List<History> historyList;
 
     public AccountDto parseAccountDto() {
