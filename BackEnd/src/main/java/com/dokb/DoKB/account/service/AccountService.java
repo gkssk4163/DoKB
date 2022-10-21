@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Random;
 
 @Service
@@ -19,6 +20,7 @@ public class AccountService {
 	AccountRepository accountRepository;
 	@Autowired
 	UserRepository userRepository;
+
 	public AccountDto create(AccountDto accountDto) {
 		User user = userRepository.findFirstByRegisterNumber(accountDto.getUserRegisterNumber()).orElseThrow(NullPointerException::new);
 
@@ -39,7 +41,7 @@ public class AccountService {
 		long randomNum = random.nextLong();
 		if (randomNum < 0) randomNum *= -1;
 		String randomStr = String.valueOf(randomNum);
-		return randomStr.substring(0, 6) + "-" + randomStr.substring(6, 8) + "-" +randomStr.substring(8, 14);
+		return randomStr.substring(0, 6) + "-" + randomStr.substring(6, 8) + "-" + randomStr.substring(8, 14);
 	}
 
 	public AccountDto read(String accountNumber) {
@@ -95,5 +97,11 @@ public class AccountService {
 
 	public void deleteAll() {
 		accountRepository.deleteAll();
+	}
+
+	public List<Account> findAllByUser(String registerNumber) {
+		User user = userRepository.findFirstByRegisterNumber(registerNumber)
+				.orElseThrow(NullPointerException::new);
+		return user.getAccountList();
 	}
 }

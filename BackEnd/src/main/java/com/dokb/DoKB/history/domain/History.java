@@ -1,6 +1,7 @@
 package com.dokb.DoKB.history.domain;
 
 import com.dokb.DoKB.account.domain.Account;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import lombok.experimental.Accessors;
 
@@ -32,7 +33,8 @@ public class History {
     private BigDecimal balance;
 
 
-    //Histort n:1 account
+    //History n:1 account
+    @JsonBackReference
     @ManyToOne
     @JoinColumn(name = "accountNumber")
     private Account account;
