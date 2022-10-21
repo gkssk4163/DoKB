@@ -15,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Component
 public class SessionManager {
     public static final String SESSION_COOKIE_NAME = "name";
-    public static final String SESSION_COOKIE_REGISTER_NUMBER = "registerNumber";
+
     public static final String SESSION_COOKIE_SESSION = "session";
     private Map<String, Object> sessionStore = new ConcurrentHashMap<>();
     // ConcurrentHashMap<>() 은 동시성(동시에 여러명이 로그인할때) 문제가 있을때 사용
@@ -25,10 +25,8 @@ public class SessionManager {
         sessionStore.put(SessionId,user);
 
 
-        Cookie registerCookie = new Cookie(SESSION_COOKIE_REGISTER_NUMBER, user.getRegisterNumber());
         Cookie nameCookie = new Cookie(SESSION_COOKIE_NAME,user.getName());
         Cookie sessionCookie = new Cookie(SESSION_COOKIE_SESSION, SessionId);
-        response.addCookie(registerCookie);
         response.addCookie(nameCookie);
         response.addCookie(sessionCookie);
     }
@@ -52,11 +50,9 @@ public class SessionManager {
 
     public void expireCookie(HttpServletRequest request){
         Cookie nameCookie = findCookie(request,SESSION_COOKIE_NAME);
-        Cookie registerCookie = findCookie(request,SESSION_COOKIE_REGISTER_NUMBER);
         Cookie sessionCookie = findCookie(request,SESSION_COOKIE_SESSION);
 
         sessionStore.remove(nameCookie.getValue());
-        sessionStore.remove(registerCookie.getValue());
         sessionStore.remove(sessionCookie.getValue());
     }
 }
