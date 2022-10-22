@@ -46,10 +46,6 @@ public class AccountController {
 		return accountService.transfer(accountTransferDto);
 	}
 
-	/**
-	 * 로그인 구현 후 registerNumber 받지 않고
-	 * Session User 정보로 조회해오도록 **수정필요**
-	 */
 	@GetMapping("/all")
 	public List<Account> findAllByUser(HttpServletRequest request) {
 		User user = (User) sessionManager.getSession(request);
