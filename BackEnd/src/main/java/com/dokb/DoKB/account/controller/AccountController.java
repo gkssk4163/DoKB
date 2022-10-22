@@ -9,7 +9,6 @@ import com.dokb.DoKB.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -21,6 +20,7 @@ public class AccountController {
 
 	@Autowired
 	SessionManager sessionManager;
+
 	@PostMapping
 	public AccountDto create(AccountDto accountDto) {
 		return accountService.create(accountDto);
@@ -52,4 +52,8 @@ public class AccountController {
 		return accountService.findAllByUser(user.getRegisterNumber());
 	}
 
+	@GetMapping("/recent_transfer/{accountNumber}")
+	public List<Account> findDistinctOpponentAccountByAccountNumber(@PathVariable(name = "accountNumber") String accountNumber) {
+		return accountService.findDistinctOpponentAccountByAccountNumber(accountNumber);
+	}
 }

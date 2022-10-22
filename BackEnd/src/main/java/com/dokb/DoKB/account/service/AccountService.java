@@ -128,4 +128,8 @@ public class AccountService {
 				.orElseThrow(NullPointerException::new);
 		return user.getAccountList();
 	}
+
+	public List<Account> findDistinctOpponentAccountByAccountNumber(String accountNumber) {
+		return accountRepository.findDistinctOpponentAccountByAccountNumber(accountNumber);
+	}
 }
