@@ -71,9 +71,8 @@ public class HistoryApiService {
 	}
 
 
-	public List<History> findAllByAccount(String accountNumber) {
-		Account account = accountRepository.findByAccountNumber(accountNumber)
-				.orElseThrow(NullPointerException::new);
-		return account.getHistoryList();
+	public List<History> findAllByAccount(String accountNumber, Integer year, Integer month) {
+		List<History> historyList = historyRepository.findHistoryList(accountNumber,year,month);
+		return historyList;
 	}
 }

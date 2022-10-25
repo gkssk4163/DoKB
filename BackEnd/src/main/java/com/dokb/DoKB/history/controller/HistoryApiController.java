@@ -35,8 +35,10 @@ public class HistoryApiController {
 		return historyApiService.delete(id);
 	}
 
-	@GetMapping("/all/{accountNumber}")
-	public List<History> findAllByAccount(@PathVariable(name = "accountNumber") String accountNumber) {
-		return historyApiService.findAllByAccount(accountNumber);
+	@GetMapping("/all/{accountNumber}/{year}/{month}")
+	public List<History> findAllByAccount(@PathVariable(name = "accountNumber") String accountNumber,
+										  @PathVariable(name = "year") Integer year,
+										  @PathVariable(name = "month") Integer month) {
+		return historyApiService.findAllByAccount(accountNumber,year,month);
 	}
 }
