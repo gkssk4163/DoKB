@@ -35,6 +35,7 @@ public class OpenAccountService {
 					}
 				});
 
+		accountRequest.setUserRegisterNumber(user.getRegisterNumber());
 		return accountService.create(accountRequest);
 	}
 }
