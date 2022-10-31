@@ -1,10 +1,16 @@
 package com.dokb.DoKB.account.controller;
 
+import com.dokb.DoKB.account.domain.Account;
 import com.dokb.DoKB.account.domain.AccountDto;
 import com.dokb.DoKB.account.domain.AccountTransferDto;
 import com.dokb.DoKB.account.service.AccountService;
+import com.dokb.DoKB.login.SessionManager;
+import com.dokb.DoKB.user.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+
+import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/account")
@@ -12,8 +18,11 @@ public class AccountController {
 	@Autowired
 	AccountService accountService;
 
+	@Autowired
+	SessionManager sessionManager;
+
 	@PostMapping
-	public AccountDto create(@RequestBody AccountDto accountDto) {
+	public AccountDto create(AccountDto accountDto) {
 		return accountService.create(accountDto);
 	}
 
@@ -23,7 +32,7 @@ public class AccountController {
 	}
 
 	@PutMapping
-	public AccountDto update(@RequestBody AccountDto accountDto) {
+	public AccountDto update(AccountDto accountDto) {
 		return accountService.update(accountDto);
 	}
 
@@ -33,8 +42,18 @@ public class AccountController {
 	}
 
 	@PostMapping("/transfer")
-	public String transfer(@RequestBody AccountTransferDto accountTransferDto) {
+	public String transfer(AccountTransferDto accountTransferDto) {
 		return accountService.transfer(accountTransferDto);
 	}
 
+	@GetMapping("/all")
+	public List<Account> findAllByUser(HttpServletRequest request) {
+		User user = (User) sessionManager.getSession(request);
+		return accountService.findAllByUser(user.getRegisterNumber());
+	}
+
+	@GetMapping("/recent_transfer/{accountNumber}")
+	public List<Account> findDistinctOpponentAccountByAccountNumber(@PathVariable(name = "accountNumber") String accountNumber) {
+		return accountService.findDistinctOpponentAccountByAccountNumber(accountNumber);
+	}
 }

@@ -2,10 +2,14 @@ package com.dokb.DoKB.user.domain;
 
 
 import com.dokb.DoKB.account.domain.Account;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.*;
 import lombok.experimental.Accessors;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -15,26 +19,41 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Accessors(chain = true)
-public class User{
+@ToString(exclude = {"account", "history"})
+public class User {
 
-    @Id
-    //@GeneratedValue(strategy = GenerationType.IDENTITY)
-    private String registerNumber;
+	@Id
+	private String registerNumber;
 
-    private String name;
+	private String name;
 
-    private String phoneNumber;
+	private String phoneNumber;
 
-    private String email;
+	private String email;
 
-    private String address;
+	private String address;
 
-    private String job;
+	private String job;
 
-    private LocalDateTime createdAt;
+	private LocalDateTime createdAt;
 
-    private LocalDateTime updatedAt;
+	private LocalDateTime updatedAt;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "user")
-    private List<Account> accountList;
+	@JsonManagedReference
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "user")
+	private List<Account> accountList;
+
+    public UserApi parseUserApi(){
+        return UserApi.builder()
+                .registerNumber(this.getRegisterNumber())
+                .name(this.getName())
+                .phoneNumber(this.getPhoneNumber())
+                .email(this.getEmail())
+                .address(this.getAddress())
+                .address(this.getAddress())
+                .job(this.getJob())
+                .createdAt(this.getCreatedAt())
+                .updatedAt(this.getUpdatedAt())
+                .build();
+    }
 }

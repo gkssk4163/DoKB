@@ -1,4 +1,4 @@
-package com.dokb.DoKB.user.repository;
+package com.dokb.DoKB.user.service.repository;
 
 import com.dokb.DoKB.user.domain.User;
 import org.springframework.data.jpa.repository.JpaRepository;

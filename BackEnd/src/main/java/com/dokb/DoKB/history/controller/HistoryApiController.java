@@ -1,36 +1,44 @@
 package com.dokb.DoKB.history.controller;
 
-import com.dokb.DoKB.history.service.HistoryApiService;
+import com.dokb.DoKB.history.domain.History;
 import com.dokb.DoKB.history.domain.HistoryApi;
+import com.dokb.DoKB.history.service.HistoryApiService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/history")
 public class HistoryApiController {
 
-    @Autowired
-    private HistoryApiService historyApiService;
+	@Autowired
+	private HistoryApiService historyApiService;
 
-    @PostMapping("")
-    public HistoryApi create(@RequestBody HistoryApi request){
-        return historyApiService.create(request);
-    }
+	@PostMapping("")
+	public HistoryApi create(HistoryApi request) {
+		return historyApiService.create(request);
+	}
 
-    @GetMapping("{id}")
-    public HistoryApi read(@PathVariable(name="id") Long id){
-        return historyApiService.read(id);
-    }
+	@GetMapping("{id}")
+	public HistoryApi read(@PathVariable(name = "id") Long id) {
+		return historyApiService.read(id);
+	}
 
-    @PutMapping("")
-    public HistoryApi update(@RequestBody HistoryApi request){
-        return historyApiService.update(request);
-    }
+	@PutMapping("")
+	public HistoryApi update(HistoryApi request) {
+		return historyApiService.update(request);
+	}
 
-    @DeleteMapping("{id}")
-    public String delete(@PathVariable(name = "id") Long id){
-        return historyApiService.delete(id);
-    }
+	@DeleteMapping("{id}")
+	public String delete(@PathVariable(name = "id") Long id) {
+		return historyApiService.delete(id);
+	}
+
+	@GetMapping("/all/{accountNumber}/{year}/{month}")
+	public List<History> findAllByAccount(@PathVariable(name = "accountNumber") String accountNumber,
+										  @PathVariable(name = "year") Integer year,
+										  @PathVariable(name = "month") Integer month) {
+		return historyApiService.findAllByAccount(accountNumber,year,month);
+	}
 }
